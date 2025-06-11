@@ -1,11 +1,15 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      python: 3.11
   build:
     commands:
-      - echo "Deploying to S3..."
+      - echo "Clearing S3 bucket..."
+      - aws s3 rm s3://index-file-bucket12345/ --recursive
+      - echo "Uploading latest index.html..."
       - aws s3 cp index.html s3://index-file-bucket12345/
-
 artifacts:
   files:
     - index.html
